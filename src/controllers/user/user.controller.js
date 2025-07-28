@@ -7,6 +7,7 @@ import { STATUS_CODES } from "../../constants/statusCodes.js";
 import { CustomError } from "../../utils/customError.js";
 import { USER_ROLES } from "../../constants/userRoles.js";
 
+// add user 
 export const AddUser = async (req, res, next) => {
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -55,3 +56,36 @@ export const AddUser = async (req, res, next) => {
     session.endSession();
   }
 };
+
+// edit user ---pending
+export const saveUpdatedUser = async (req, res, next) =>{
+  try {
+    // get user data from user.userData
+    // find the user from db
+    // save the updated user 
+  } catch (error) {
+    next(error)
+  }
+}
+
+// suspend user ---pending
+export const suspendUserAccount = async (req, res, next) => {
+  try {
+    // get user id
+    // find user
+    // mark as suspended and save
+  } catch (error) {
+    next(error)
+  }
+} 
+
+// activate user ---pending
+export const activateUserAccount = async (req, res, next) => {
+  try {
+    // get user id
+    // find user
+    // mark as active and save
+  } catch (error) {
+    next(error)
+  }
+} 
