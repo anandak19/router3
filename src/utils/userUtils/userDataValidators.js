@@ -1,4 +1,4 @@
-import User from "../../models/User.js";
+import { getUserByEmail } from "../../repositories/user/user.repository.js";
 
 const nameRegex = /^[a-zA-Z\s]+$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,7 +26,7 @@ export const validateEmail = async (email, isNew = false) => {
     }
 
     if (isNew) {
-      const existingUser = await User.findOne({ email });
+      const existingUser = await getUserByEmail({email})
       if (existingUser) {
         return {
           valid: false,

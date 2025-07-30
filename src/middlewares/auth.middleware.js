@@ -1,6 +1,6 @@
 import { STATUS_CODES } from "../constants/statusCodes.js";
 import { appUsers, siteUsers, USER_ROLES } from "../constants/userRoles.js";
-import User from "../models/User.js";
+import { varifyUserPassword } from "../services/user/user.service.js";
 import { CustomError } from "../utils/customError.js";
 
 // validate login data and varify password
@@ -15,16 +15,8 @@ export const validateLoginData = async (req, res, next) => {
       );
     }
 
-    const userData = await User.findOne({ email });
-    if (!userData) {
-      throw new CustomError("User not found", STATUS_CODES.NOT_FOUND);
-    }
-
-    // check password
-    const isMatch = password === userData.password;
-    if (!isMatch) {
-      throw new CustomError("Incorrect password", STATUS_CODES.BAD_REQUEST);
-    }
+    // call validate user with password service method
+    const userData = varifyUserPassword(email, password)
 
     req.user = userData;
     return next();
