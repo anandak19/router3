@@ -4,6 +4,7 @@
 export const assignSite = async(req, res, next) => {
     try {
         // get user
+        
         // get site
         // create new site mapping
         // save
