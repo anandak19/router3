@@ -1,6 +1,6 @@
 import { STATUS_CODES } from "../constants/statusCodes.js";
 import { appUsers, siteUsers, USER_ROLES } from "../constants/userRoles.js";
-import { varifyUserPassword } from "../services/user/user.service.js";
+import userService from "../services/user/user.service.js";
 import { CustomError } from "../utils/customError.js";
 
 // validate login data and varify password
@@ -16,7 +16,7 @@ export const validateLoginData = async (req, res, next) => {
     }
 
     // call validate user with password service method
-    const userData = varifyUserPassword(email, password)
+    const userData = await userService.varifyUserPassword(email, password)
 
     req.user = userData;
     return next();

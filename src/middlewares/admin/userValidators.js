@@ -1,5 +1,5 @@
 import { STATUS_CODES } from "../../constants/statusCodes.js";
-import User from "../../models/User.js";
+import userService from "../../services/user/user.service.js";
 import { CustomError } from "../../utils/customError.js";
 import {
   validateEmail,
@@ -35,21 +35,8 @@ export const validateNewUser = async (req, _res, next) => {
 
 export const checkUserExistance = async (req, res, next) => {
   try {
-    const { email, phoneNumber, userName, userRole } = req.body;
-
-    const existingUser = await User.findOne({
-      userRole,
-      $or: [{ email }, { phoneNumber }, { userName }],
-    });
-
-    if (existingUser) {
-      throw new CustomError(
-        "User with the same email, phone number, or username already exists for this role.",
-        STATUS_CODES.CONFLICT
-      );
-    }
-
-    next();
+    await userService.checkUserExistsByRoleOrFields(req.newUser)
+    return next();
   } catch (error) {
     next(error);
   }

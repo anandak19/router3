@@ -1,18 +1,27 @@
-import Site from "../../models/Site.js"
+import Site from "../../models/Site.js";
 
-//save site
-export const saveSite = async (newSite, session = null) => {
-    return await newSite.save(session ? {session}: {})
+class SiteRepository {
+  async isSiteExists(newSite, session = null) {
+    return session
+      ? await Site.findOne({ siteName: newSite.siteName }).session(session)
+      : await Site.findOne({ siteName: newSite.siteName });
+  }
+
+  async saveSite(newSite, session = null){
+    return await newSite.save(session ? { session } : {});
+  }
+
+  async getAllSites(){
+    return await Site.find();
+  }
+
+  async getUsersSite(userId){
+    return await Site.find({addedBy: userId})
+  }
+
+  async getSiteById(id){
+    return await Site.findById(id);
+  }
 }
 
-//check if site exists
-export const isSiteExists = async (newSite, session = null) => {
-  return session
-    ? await Site.findOne({ siteName: newSite.siteName }).session(session)
-    : await Site.findOne({ siteName: newSite.siteName });
-};
-
-//get all sites
-
-
-// get site by id
+export default new SiteRepository()

@@ -17,7 +17,6 @@ const UserSitesSchema = new Schema(
       index: true,
     },
     hotspot: { type: String, required: true, trim: true },
-
     totalSales: { type: Number, default: 0, min: 0 }, // totalSalesByUserInSite
     cashFromMe: { type: Number, default: 0, min: 0 }, // totalCashCollectedFromMe
     cashFromOthers: { type: Number, default: 0, min: 0 }, // cashCollectedFromOthers
@@ -30,4 +29,4 @@ const UserSitesSchema = new Schema(
 
 UserSitesSchema.index({ userId: 1, routerId: 1 }, { unique: true });
 
-export default mongoose.model("UserRouters", UserSitesSchema);
+export default mongoose.model("UserSite", UserSitesSchema);

@@ -1,7 +1,7 @@
 import { STATUS_CODES } from "../../constants/statusCodes.js";
-import User from "../../models/User.js";
 import { CustomError } from "../../utils/customError.js";
 import { verifyToken } from "../../utils/userUtils/jwt.js";
+import userService from "../../services/user/user.service.js";
 
 // for token validation, and finding user data
 export const validateToken = async (req, res, next) => {
@@ -23,7 +23,7 @@ export const validateToken = async (req, res, next) => {
     const token = parts[1];
     const decoded = verifyToken(token)
 
-    const user = await User.findById(decoded.id).select("-password");
+    const user = await userService.getUserById(decoded.id)
     if (!user) {
       throw new CustomError("Access denied!", STATUS_CODES.UNAUTHORIZED);
     }

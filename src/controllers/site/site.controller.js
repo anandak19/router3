@@ -1,16 +1,14 @@
 import { STATUS_CODES } from "../../constants/statusCodes.js";
-import { createSite } from "../../services/site/site.service.js";
+import siteService from "../../services/site/site.service.js";
 
-// to save new site ---PENDING
+// to save new site ---TESTED OK
 export const addNewSite = async (req, res, next) => {
   try {
-    console.log(req.user)
-    console.log(req.site)
 
-    await createSite(req.site, req.user._id);
+    await siteService.createSite(req.site, req.user._id);
     res
       .status(STATUS_CODES.CREATED)
-      .json({ message: "Sited created successfully" });
+      .json({ message: "Site created successfully" });
   } catch (error) {
     next(error);
   }
@@ -38,11 +36,11 @@ export const deleteSite = async (req, res, next) => {
 };
 
 // get sites added by current user ---PENDING
-export const getSitesAddedByUser = async (req, res, next) => {
+export const getAllSites = async (req, res, next) => {
   try {
     // get user
-    // find sites added by user
-    // return
+    const sites = await siteService.getSites()
+    res.status(STATUS_CODES.SUCCESS).json(sites)
   } catch (error) {
     next(error);
   }

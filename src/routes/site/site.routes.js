@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   addNewSite,
   deleteSite,
-  getSitesAddedByUser,
+  getAllSites,
   saveEditedSiteData,
 } from "../../controllers/site/site.controller.js";
 import {
@@ -16,14 +16,13 @@ import { authorizeAdmin } from "../../middlewares/auth.middleware.js";
 
 const siteRoutes = Router();
 
-// add site
-siteRoutes.post(
-  "/new",
-  validateToken,
-  authorizeAdmin,
-  validateNewSite,
-  addNewSite
-);
+siteRoutes.use(validateToken);
+
+// get all sites in the db
+siteRoutes.get("/", authorizeAdmin, getAllSites);
+
+// add new site
+siteRoutes.post("/new", authorizeAdmin, validateNewSite, addNewSite);
 
 // edit site
 siteRoutes.patch("/edit", saveEditedSiteData);
@@ -33,9 +32,6 @@ siteRoutes.delete("/delete/:id", deleteSite);
 
 // assign site
 siteRoutes.post("/map/:id", assignSite);
-
-// get sites added by me (user who logged in)
-siteRoutes.get("/own", getSitesAddedByUser);
 
 // get sites assigned for me (user who logged in)
 siteRoutes.get("/assigned", getSitesForCurrentUser);
