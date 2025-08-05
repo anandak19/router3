@@ -1,10 +1,10 @@
 import { STATUS_CODES } from "../../constants/statusCodes.js";
-import { createUser } from "../../services/user/user.service.js";
+import userService from "../../services/user/user.service.js";
 
 // add user
 export const AddUser = async (req, res, next) => {
   try {
-    createUser(req.newUser);
+    await userService.createUser(req.newUser)
 
     res
       .status(STATUS_CODES.CREATED)

@@ -1,6 +1,6 @@
 import express from 'express'
 import { validateToken } from '../../controllers/auth/authVarifications.js'
-import { getMenu } from '../../controllers/common/menu.controller.js'
+import { getMenu } from '../../controllers/global/menu.controller.js'
 
 const commonRoutes = express.Router()
 

@@ -11,7 +11,7 @@ const CashCollectorSchema = new Schema(
     },
 
     cashFromMe: { type: Number, default: 0, min: 0 }, // totalCashCollectedFromMe
-    cashFromOthers: { type: Number, default: 0, min: 0 }, // cashCollectedFromOthers
+    cashFromOthers: { type: Number, default: 0, min: 0 }, // totalCashCollectedFromOthers
     balanceLeft: { type: Number, default: 0, min: 0 },
   },
   { timestamps: true }

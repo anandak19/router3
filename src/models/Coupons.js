@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const SiteSchema = new mongoose.Schema(
+const CouponSchema = new mongoose.Schema(
   {
     addedBy: {
       type: mongoose.Schema.Types.ObjectId,
@@ -21,4 +21,4 @@ const SiteSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Site", SiteSchema);
+export default mongoose.model("Coupon", CouponSchema);

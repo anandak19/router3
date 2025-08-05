@@ -1,6 +1,6 @@
 import { STATUS_CODES } from "../../constants/statusCodes.js";
-import User from "../../models/User.js";
-import { CustomError } from "../../utils/customError.js";
+import userService from "../../services/user/user.service.js";
+import { AppError } from "../../utils/appError.js";
 import {
   validateEmail,
   validatePassword,
@@ -12,11 +12,11 @@ export const validateNewUser = async (req, _res, next) => {
 
     const emailResult = await validateEmail(email, true);
     if (!emailResult.valid)
-      throw new CustomError(emailResult.message, STATUS_CODES.BAD_REQUEST);
+      throw new AppError(emailResult.message, STATUS_CODES.BAD_REQUEST);
 
     const passwordResult = validatePassword(password);
     if (!passwordResult.valid)
-      throw new CustomError(passwordResult.message, STATUS_CODES.BAD_REQUEST);
+      throw new AppError(passwordResult.message, STATUS_CODES.BAD_REQUEST);
 
     // add phonenumber validation, username, and user role validationsv --- here
 
@@ -35,21 +35,8 @@ export const validateNewUser = async (req, _res, next) => {
 
 export const checkUserExistance = async (req, res, next) => {
   try {
-    const { email, phoneNumber, userName, userRole } = req.body;
-
-    const existingUser = await User.findOne({
-      userRole,
-      $or: [{ email }, { phoneNumber }, { userName }],
-    });
-
-    if (existingUser) {
-      throw new CustomError(
-        "User with the same email, phone number, or username already exists for this role.",
-        STATUS_CODES.CONFLICT
-      );
-    }
-
-    next();
+    await userService.checkUserExistsByRoleOrFields(req.newUser)
+    return next();
   } catch (error) {
     next(error);
   }

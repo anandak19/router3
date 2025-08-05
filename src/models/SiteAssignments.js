@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { USER_ROLES } from "../constants/userRoles";
+import { USER_ROLES } from "../constants/userRoles.js";
 
 const SiteAssignmentsSchema = new mongoose.Schema(
   {
@@ -8,7 +8,7 @@ const SiteAssignmentsSchema = new mongoose.Schema(
       ref: "Users",
       required: true,
     },
-    role: {
+    userRole: {
       type: String,
       required: true,
       enum: [USER_ROLES.ACCOUNTANT, USER_ROLES.PARTNER, USER_ROLES.SUB_ADMIN], 
@@ -25,4 +25,4 @@ const SiteAssignmentsSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Site", SiteAssignmentsSchema);
+export default mongoose.model("SiteAssignments", SiteAssignmentsSchema);

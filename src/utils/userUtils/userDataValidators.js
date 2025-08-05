@@ -1,4 +1,4 @@
-import { getUserByEmail } from "../../repositories/user/user.repository.js";
+import userService from "../../services/user/user.service.js";
 
 const nameRegex = /^[a-zA-Z\s]+$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,7 +26,7 @@ export const validateEmail = async (email, isNew = false) => {
     }
 
     if (isNew) {
-      const existingUser = await getUserByEmail({email})
+      const existingUser = await userService.getUserByEmail(email)
       if (existingUser) {
         return {
           valid: false,

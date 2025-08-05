@@ -1,10 +1,10 @@
 import { STATUS_CODES } from "../constants/statusCodes.js"
-import { CustomError } from "../utils/customError.js"
+import { AppError } from "../utils/appError.js"
 
 export const checkPermission = (permission) => {
     return (req, _res, next) => {
         if(!req.user.permission.includes(permission)) {
-            throw new CustomError("Permission denied", STATUS_CODES.UNAUTHORIZED)
+            throw new AppError("Permission denied", STATUS_CODES.UNAUTHORIZED)
         }
         next()
     }
