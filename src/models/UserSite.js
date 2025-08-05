@@ -16,7 +16,8 @@ const UserSitesSchema = new Schema(
       required: true,
       index: true,
     },
-    hotspot: { type: String, required: true, trim: true },
+    userRole: {type: String, required: true}, 
+    // hotspot: { type: String, required: true, trim: true },
     totalSales: { type: Number, default: 0, min: 0 }, // totalSalesByUserInSite
     cashFromMe: { type: Number, default: 0, min: 0 }, // totalCashCollectedFromMe
     cashFromOthers: { type: Number, default: 0, min: 0 }, // cashCollectedFromOthers
@@ -27,6 +28,6 @@ const UserSitesSchema = new Schema(
   }
 );
 
-UserSitesSchema.index({ userId: 1, routerId: 1 }, { unique: true });
+UserSitesSchema.index({ userId: 1, siteId: 1 }, { unique: true });
 
 export default mongoose.model("UserSite", UserSitesSchema);

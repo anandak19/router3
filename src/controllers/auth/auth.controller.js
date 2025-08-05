@@ -1,5 +1,4 @@
 import { STATUS_CODES } from "../../constants/statusCodes.js";
-import { CustomError } from "../../utils/customError.js";
 import { generateToken } from "../../utils/userUtils/jwt.js";
 
 // login user, send token, some user data 

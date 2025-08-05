@@ -17,6 +17,6 @@ router.use('/admin', adminRoutes)
 
 router.use('/site', siteRoutes)
 
-router.use('/profile', profileRoutes)
+router.use('/site/:id/profile', profileRoutes)
 
 export default router

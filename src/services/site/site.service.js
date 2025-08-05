@@ -1,13 +1,13 @@
 import { STATUS_CODES } from "../../constants/statusCodes.js";
 import { buildSite } from "../../repositories/site/site.builder.js";
-import { CustomError } from "../../utils/customError.js";
+import { AppError } from "../../utils/appError.js";
 import siteRepository from "../../repositories/site/site.repository.js";
 
 class SiteService {
   async createSite(siteData, addedBy) {
     const existingSite = await siteRepository.isSiteExists(siteData);
     if (existingSite) {
-      throw new CustomError(
+      throw new AppError(
         "A site with this name already exists",
         STATUS_CODES.CONFLICT
       );
@@ -16,7 +16,7 @@ class SiteService {
     const newSite = buildSite(siteData, addedBy);
     const savedSite = await siteRepository.saveSite(newSite);
     if (!savedSite) {
-      throw new CustomError(
+      throw new AppError(
         "Failed to save site",
         STATUS_CODES.INTERNAL_SERVER_ERROR
       );
@@ -29,7 +29,7 @@ class SiteService {
     try {
       const sites = await siteRepository.getAllSites();
       if (!sites) {
-        throw new CustomError("No sites found", STATUS_CODES.NOT_FOUND);
+        throw new AppError("No sites found", STATUS_CODES.NOT_FOUND);
       }
       return sites;
     } catch (error) {
@@ -42,7 +42,7 @@ class SiteService {
       const site = await siteRepository.getSiteById(siteId);
 
       if(!site){
-        throw new CustomError("Site not found", STATUS_CODES.NOT_FOUND);
+        throw new AppError("Site not found", STATUS_CODES.NOT_FOUND);
       }
 
       return site;
@@ -51,6 +51,7 @@ class SiteService {
       throw error
     }
   }
+
 }
 
 export default new SiteService();

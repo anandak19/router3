@@ -1,5 +1,5 @@
 import { STATUS_CODES } from "../../constants/statusCodes.js";
-import { CustomError } from "../../utils/customError.js";
+import { AppError } from "../../utils/appError.js";
 import { verifyToken } from "../../utils/userUtils/jwt.js";
 import userService from "../../services/user/user.service.js";
 
@@ -8,7 +8,7 @@ export const validateToken = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-      throw new CustomError(
+      throw new AppError(
         "Authorization header is missing",
         STATUS_CODES.BAD_REQUEST
       );
@@ -17,7 +17,7 @@ export const validateToken = async (req, res, next) => {
     // Verify the format is 'Bearer <token>'
     const parts = authHeader.split(" ");
     if (parts.length !== 2 || parts[0] !== "Bearer") {
-      throw new CustomError("Invalid token format", STATUS_CODES.BAD_REQUEST);
+      throw new AppError("Invalid token format", STATUS_CODES.BAD_REQUEST);
     }
 
     const token = parts[1];
@@ -25,7 +25,7 @@ export const validateToken = async (req, res, next) => {
 
     const user = await userService.getUserById(decoded.id)
     if (!user) {
-      throw new CustomError("Access denied!", STATUS_CODES.UNAUTHORIZED);
+      throw new AppError("Access denied!", STATUS_CODES.UNAUTHORIZED);
     }
 
     req.user = user;

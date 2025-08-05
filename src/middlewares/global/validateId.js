@@ -1,5 +1,5 @@
 import { STATUS_CODES } from "../../constants/statusCodes.js";
-import { CustomError } from "../../utils/customError.js";
+import { AppError } from "../../utils/appError.js";
 import validatorsService from "../../services/global/validators.service.js";
 
 export const validateParamId = (req, res, next) => {
@@ -7,13 +7,12 @@ export const validateParamId = (req, res, next) => {
     const { id } = req.params;
 
     if (!id) {
-        throw new CustomError("Missing ID in request parameters.", STATUS_CODES.BAD_REQUEST)
+        throw new AppError("Missing ID in request parameters.", STATUS_CODES.BAD_REQUEST)
     }
 
     // call service to check the id type
-    console.log(validatorsService.isValidId(id))
     if(!validatorsService.isValidId(id)){
-      throw new CustomError("Invalid ObjectId.", STATUS_CODES.BAD_REQUEST)
+      throw new AppError("Invalid ObjectId.", STATUS_CODES.BAD_REQUEST)
     }
 
     return next();

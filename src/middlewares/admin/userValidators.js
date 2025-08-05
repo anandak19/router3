@@ -1,6 +1,6 @@
 import { STATUS_CODES } from "../../constants/statusCodes.js";
 import userService from "../../services/user/user.service.js";
-import { CustomError } from "../../utils/customError.js";
+import { AppError } from "../../utils/appError.js";
 import {
   validateEmail,
   validatePassword,
@@ -12,11 +12,11 @@ export const validateNewUser = async (req, _res, next) => {
 
     const emailResult = await validateEmail(email, true);
     if (!emailResult.valid)
-      throw new CustomError(emailResult.message, STATUS_CODES.BAD_REQUEST);
+      throw new AppError(emailResult.message, STATUS_CODES.BAD_REQUEST);
 
     const passwordResult = validatePassword(password);
     if (!passwordResult.valid)
-      throw new CustomError(passwordResult.message, STATUS_CODES.BAD_REQUEST);
+      throw new AppError(passwordResult.message, STATUS_CODES.BAD_REQUEST);
 
     // add phonenumber validation, username, and user role validationsv --- here
 

@@ -19,3 +19,5 @@ export const siteUsers = [
 ];
 
 export const appUsers = [USER_ROLES.STAFF, USER_ROLES.CASH_COLLECTOR];
+
+export const userSiteHolders = [USER_ROLES.STAFF, USER_ROLES.CASH_COLLECTOR, USER_ROLES.ACCOUNTANT]
